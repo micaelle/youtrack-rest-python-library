@@ -370,6 +370,7 @@ class RedmineImporter(object):
         project_id = project.identifier
         offset = 0
         assignee_group = self._get_assignee_group_name(project_id)
+        self._create_field(project_id, 'redmine-id', 'integer')
         while True:
             issues = self._source.get_project_issues(project.id, limit, offset)
             if not issues:
@@ -388,6 +389,7 @@ class RedmineImporter(object):
     def _make_issue(self, redmine_issue, project_id):
         issue = youtrack.Issue()
         issue['comments'] = []
+        issue['redmine-id'] = redmine_issue.id
         try:
             for name, value in redmine_issue.attributes.items():
                 if name in ('project', 'attachments'):
