@@ -551,7 +551,10 @@ class RedmineImporter(object):
         work_items = self._source.get_time_entries(issue.id)
         for t in sorted(work_items, key=lambda t: t.spent_on):
             work_item = youtrack.WorkItem()
-            work_item.authorLogin = self._create_user(t.user).login
+            try:
+                work_item.authorLogin = self._create_user(t.user).login
+            except AttributeError:
+                work_item.authorLogin = 'guest'
             work_item.date = str(to_unixtime(t.spent_on))
             work_item.description = t.comments
             work_item.duration = int(float(t.hours) * 60)
@@ -563,7 +566,10 @@ class RedmineImporter(object):
         if not hasattr(issue, 'attachments'):
             return
         for attach in issue.attachments:
-            attach.author.login = self._create_user(attach.author).login
+            try:
+                attach.author.login = self._create_user(attach.author).login
+            except:
+                attach.author.login = 'guest'
             if not attach.author.login:
                 attach.author.login = 'guest'
             self._target.createAttachmentFromAttachment(
