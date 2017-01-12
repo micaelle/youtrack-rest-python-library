@@ -410,11 +410,15 @@ class RedmineImporter(object):
                     if name == 'fixed_version':
                         value = self._to_yt_version(value)
                     self._add_field_to_issue(project_id, issue, name, value)
+
+            issue.reporterName = getattr(issue, 'reporterName', 'guest')
+
         except Exception, e:
             print 'Failed to process issue:'
             print redmine_issue
             traceback.print_exc()
             raise e
+
         return issue
 
     def _convert_value(self, field_name, value):
