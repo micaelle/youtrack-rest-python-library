@@ -587,7 +587,8 @@ class RedmineImporter(object):
             'duplicates' : 'duplicate',
             'relates'    : 'relates',
             'blocks'     : 'depend',
-            'precedes'   : 'depend'
+            'precedes'   : 'depend',
+            'copied_to'  : 'relates'
         }
         if hasattr(issue, 'relations'):
             for rel in issue.relations:
