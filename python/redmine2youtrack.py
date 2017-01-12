@@ -19,7 +19,7 @@ sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 0)
 sys.stderr = sys.stdout
 
 
-CHUNK_SIZE = 100
+CHUNK_SIZE = 2
 
 
 def usage():
@@ -541,7 +541,10 @@ class RedmineImporter(object):
             if rec.notes is not None and rec.notes != '':
                 comment = youtrack.Comment()
                 comment.text = rec.notes
-                comment.author = self._create_user(rec.user).login
+                try:
+                    comment.author = self._create_user(rec.user).login
+                except AttributeError:
+                    comment.author = 'guest'
                 comment.created = str(to_unixtime(rec.created_on))
                 issue['comments'].append(comment)
 
@@ -570,8 +573,10 @@ class RedmineImporter(object):
         for attach in issue.attachments:
             try:
                 attach.author.login = self._create_user(attach.author).login
-            except:
+            except AttributeError:
+                attach.author = Author()
                 attach.author.login = 'guest'
+
             if not attach.author.login:
                 attach.author.login = 'guest'
             self._target.createAttachmentFromAttachment(
@@ -631,6 +636,8 @@ class RedmineImporter(object):
         if links:
             self._target.importLinks(links)
             
+class Author:
+    pass
 
 class RedmineAttachment(object):
     def __init__(self, attach, source):
