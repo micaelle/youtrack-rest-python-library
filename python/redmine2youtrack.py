@@ -207,7 +207,7 @@ class RedmineImporter(object):
                 pass
             if not hasattr(user, 'login') or not user.login:
                 if hasattr(user, 'email'):
-                    user.login = user.email
+                    user.login = user.email or 'guest'
                 else:
                     user.login = 'guest'
                 print 'Cannot get login for user id=%s, set it to "%s"' % \
@@ -546,7 +546,7 @@ class RedmineImporter(object):
                 comment = youtrack.Comment()
                 comment.text = rec.notes
                 try:
-                    comment.author = self._create_user(rec.user).login
+                    comment.author = self._create_user(rec.user).login or 'guest'
                 except AttributeError:
                     comment.author = 'guest'
                 comment.created = str(to_unixtime(rec.created_on))
