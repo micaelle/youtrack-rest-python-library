@@ -102,7 +102,6 @@ class RedmineImporter(object):
         self._params = params
         self._project_lead = y_user
         self._projects = None
-        self._max_issue_ids = {}
         self._issue_ids = {}
         self._relations = {}
         self._users = {}
@@ -288,14 +287,10 @@ class RedmineImporter(object):
 
     def _get_yt_issue_id(self, issue, as_number_in_project=False):
         project_id = self._projects['by_iid'][issue.project.id].identifier
-        new_id = self._max_issue_ids.get(project_id, 0) + 1
         rid = int(issue.id)
         if rid not in self._issue_ids:
-            self._max_issue_ids[project_id] = new_id
-            self._issue_ids[rid] = {'id': new_id, 'project_id': project_id}
-        if as_number_in_project:
-            return self._issue_ids[rid]['id']
-        return self._to_yt_issue_id(rid)
+            self._issue_ids[rid] = {'id': rid, 'project_id': project_id}
+        return as_number_in_project and self._issue_ids[rid]['id'] or self._to_yt_issue_id(rid)
 
     def _to_yt_issue_id(self, iid):
         issue = self._issue_ids[iid]
