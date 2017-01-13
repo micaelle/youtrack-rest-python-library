@@ -28,15 +28,15 @@ class Mapping(object):
 
     CONVERSION = {
         'State': {
-            'Resolved' : 'Fixed',
-            'Closed'   : 'Fixed',
-            'Rejected' : "Won't fix"
+            'Open'          : 'Opened',
+            'In progress'   : 'Work in progress',
+            'Done'          : 'Fixed',
         },
         'Priority': {
-            'High'      : 'Major',
-            'Low'       : 'Minor',
-            'Urgent'    : 'Critical',
-            'Immediate' : 'Show-stopper'
+            'Blocking'  : 'Blocking',
+            'High'      : 'Urgent',
+            'Normal'    : 'Normal',
+            'Low'       : 'Minor'
         }
     }
 
