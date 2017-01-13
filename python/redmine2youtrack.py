@@ -560,6 +560,7 @@ class RedmineImporter(object):
             work_item.date = str(to_unixtime(t.spent_on))
             work_item.description = t.comments
             work_item.duration = int(float(t.hours) * 60)
+            work_item.worktype = t.activity.name or 'Development'
             import_data.append(work_item)
         if import_data:
             self._target.importWorkItems(self._get_yt_issue_id(issue), import_data)
