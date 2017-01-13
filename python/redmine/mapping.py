@@ -23,7 +23,11 @@ class Mapping(object):
         'Due Date'     : 'date',
         'Estimation'   : 'period',
         'Subsystem'    : 'ownedField[1]',
-        'Fix versions' : 'version[*]'
+        'Fix versions' : 'version[*]',
+        'Customer'     : 'enum[1]',
+        'Environment'  : 'enum[1]',
+        'Owner'        : 'user[1]',
+        'Core branch'  : 'enum[1]'
     }
 
     CONVERSION = {
