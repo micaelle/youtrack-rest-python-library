@@ -26,7 +26,6 @@ class Mapping(object):
         'Fix versions' : 'version[*]',
         'Customer'     : 'enum[1]',
         'Environment'  : 'enum[1]',
-        'Owner'        : 'user[1]',
         'Core branch'  : 'enum[1]'
     }
 
