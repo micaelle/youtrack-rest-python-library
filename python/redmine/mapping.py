@@ -35,7 +35,7 @@ class Mapping(object):
             'Open'          : 'Opened',
             'In progress'   : 'Work in progress',
             'Done'          : 'Fixed',
-            'Feedback'      : 'Open'
+            'Feedback'      : 'Opened'
         },
         'Priority': {
             'Blocking'  : 'Blocking',
